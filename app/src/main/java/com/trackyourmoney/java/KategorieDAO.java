@@ -21,4 +21,5 @@ public interface KategorieDAO {
 
     @Query("SELECT * FROM Kategorie")
     List<Kategorie> getAllKategorien();
+
 }

@@ -21,4 +21,14 @@ public interface EinnahmeDAO {
 
     @Query("SELECT * FROM Einnahme")
     List<Einnahme> getAllEinnahmen();
+
+    @Query("SELECT e.* FROM Einnahme e " +
+            "INNER JOIN Kategorie k ON e.kategorieId = k.id " +
+            "WHERE k.name = :kategorieName")
+    List<Einnahme> getEinnahmenForKategorieName(String kategorieName);
+
+    @Query("SELECT e.* FROM Einnahme e " +
+            "INNER JOIN Kategorie k ON e.kategorieId = k.id " +
+            "WHERE k.name = :kategorieName AND e.value BETWEEN :minBetrag AND :maxBetrag")
+    List<Einnahme> getEinnahmenForKategorieNameAndBetragRange(String kategorieName, double minBetrag, double maxBetrag);
 }

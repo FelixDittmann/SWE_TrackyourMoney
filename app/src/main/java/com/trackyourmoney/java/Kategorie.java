@@ -11,18 +11,14 @@ public class Kategorie {
     public long id;
 
     public String name;
-    private List<Posten> elemente;
     private Budget budget;
 
     public Kategorie(String name) {
         this.name = name;
     }
-
-    public void postenHinzufügen(Posten neuerPosten) {
-        elemente.add(neuerPosten);
+    public Kategorie(String name, Budget budget) {
+        this.name = name;
+        this.budget = budget;
     }
 
-    public void postenEntfernen(Posten posten) {
-        elemente.remove(posten);
-    }
 }
