@@ -14,12 +14,12 @@ public class Controller {
 
     }
 
-    public Posten ausgabeErstellen(String name, double wert, Date datum, String anmerkungen, Kategorie kategorie, OffsetDateTime wiederholungsintervall) {
+    public Posten ausgabeErstellen(String name, double wert, Date datum, String anmerkungen, long kategorie, int wiederholungsintervall) {
         Ausgabe newPosten = new Ausgabe(name, wert, anmerkungen, datum, false, kategorie, wiederholungsintervall);
         return newPosten;
     }
 
-    public Posten einnahmeErstellen(String name, double wert, Date datum, String anmerkungen, Kategorie kategorie, OffsetDateTime wiederholungsintervall) {
+    public Posten einnahmeErstellen(String name, double wert, Date datum, String anmerkungen, long kategorie, int wiederholungsintervall) {
         Einnahme newPosten = new Einnahme(name, wert, anmerkungen, datum, false, kategorie, wiederholungsintervall);
         return newPosten;
     }

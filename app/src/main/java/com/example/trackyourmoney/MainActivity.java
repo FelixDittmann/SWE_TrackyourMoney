@@ -15,6 +15,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.trackyourmoney.databinding.ActivityMainBinding;
+import com.trackyourmoney.java.AppDataBase;
+import com.trackyourmoney.java.AusgabeDAO;
+import com.trackyourmoney.java.DatabaseClient;
+import com.trackyourmoney.java.EinnahmeDAO;
+import com.trackyourmoney.java.KategorieDAO;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        AppDataBase db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
+        EinnahmeDAO einnahmeDao = db.einnahmeDao();
+        AusgabeDAO ausgabeDao = db.ausgabeDao();
+        KategorieDAO kategorieDao = db.kategorieDao();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
