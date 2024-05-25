@@ -11,14 +11,14 @@ public class Kategorie {
     public long id;
 
     public String name;
-    private Budget budget;
+    private Double budget;
 
-    public Kategorie(String name) {
-        this.name = name;
-    }
-    public Kategorie(String name, Budget budget) {
+    public Kategorie(String name, Double budget) {
         this.name = name;
         this.budget = budget;
+    }
+    public Double getBudget() {
+        return this.budget;
     }
 
 }

@@ -18,13 +18,16 @@ public class Einnahme extends Posten{
     public String name;
     public double value;
     public String anmerkungen;
-    public Date date;
+    public long date;
     public boolean wiederholend;
-    public long kategorieId;
+    public Long kategorieId;
     public int wiederholungsintervall;
 
+    public Einnahme(){
 
-    public Einnahme(String name, double wert, String anmerkungen, Date datum, boolean wiederholend, long kategorie, int wiederholungsintervall) {
+    }
+
+    public Einnahme(String name, double wert, String anmerkungen, long datum, boolean wiederholend, long kategorie, int wiederholungsintervall) {
         this.name = name;
         this.value = wert;
         this.anmerkungen = anmerkungen;

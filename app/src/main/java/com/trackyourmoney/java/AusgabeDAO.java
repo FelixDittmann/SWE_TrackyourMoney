@@ -22,6 +22,9 @@ public interface AusgabeDAO {
     @Query("SELECT * FROM Ausgabe")
     List<Ausgabe> getAllAusgaben();
 
+    @Query("SELECT * FROM Ausgabe WHERE id = :ausgabeId LIMIT 1")
+    Ausgabe findById(long ausgabeId);
+
     @Query("SELECT a.* FROM Ausgabe a " +
             "INNER JOIN Kategorie k ON a.kategorieId = k.id " +
             "WHERE k.name = :kategorieName")

@@ -22,6 +22,9 @@ public interface EinnahmeDAO {
     @Query("SELECT * FROM Einnahme")
     List<Einnahme> getAllEinnahmen();
 
+    @Query("SELECT * FROM Einnahme WHERE id = :einnahmeId LIMIT 1")
+    Einnahme findById(long einnahmeId);
+
     @Query("SELECT e.* FROM Einnahme e " +
             "INNER JOIN Kategorie k ON e.kategorieId = k.id " +
             "WHERE k.name = :kategorieName")

@@ -7,9 +7,9 @@ public abstract class Posten {
     String name;
     double value;
     String anmerkungen;
-    Date datum;
+    long datum;
     boolean wiederholend;
-    Kategorie kategorie;
+    long kategorieId;
     OffsetDateTime wiederholungsintervall;
     public void bearbeiten(String name, String anmerkungen) {
         this.name = name;

@@ -17,10 +17,13 @@ public class Ausgabe extends Posten{
     public String name;
     public double betrag;
     public long date;
-    public long kategorieId; // Foreign key reference to Kategorie table
+    public Long kategorieId; // Foreign key reference to Kategorie table
     public boolean wiederholend;
     public int wiederholungsintervall;
-    public Ausgabe(String name, double wert, String anmerkungen, Date datum, boolean wiederholend, long kategorie, int wiederholungsintervall) {
+    public Ausgabe() {
+
+    }
+    public Ausgabe(String name, double wert, String anmerkungen, long datum, boolean wiederholend, Long kategorie, int wiederholungsintervall) {
         this.name = name;
         this.value = wert;
         this.anmerkungen = anmerkungen;
