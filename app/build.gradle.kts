@@ -39,6 +39,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-common:2.6.1")
     implementation("androidx.test:core:1.5.0")
+    implementation("androidx.activity:activity:1.8.0")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
 
     implementation("androidx.appcompat:appcompat:1.6.1")

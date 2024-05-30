@@ -11,15 +11,51 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.trackyourmoney.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+    <activity
+        android:id="@+id/nav_analyse"
+        android:name="com.example.trackyourmoney.ui.analyse.AnalyseActivity"
+        android:label="@string/menu_analyse"
+        tools:layout="@layout/activity_analyse" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.trackyourmoney.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+    <activity
+        android:id="@+id/nav_fixkosten"
+        android:name="com.example.trackyourmoney.ui.fixkosten.FixkostenActivity"
+        android:label="@string/menu_fixkosten"
+        tools:layout="@layout/activity_fixkosten" />
+
+    <activity
+        android:id="@+id/nav_ausgaben"
+        android:name="com.example.trackyourmoney.ui.ausgaben.AusgabenActivity"
+        android:label="@string/menu_ausgaben"
+        tools:layout="@layout/activity_ausgaben" />
+
+    <activity
+        android:id="@+id/nav_fixkosten_aendern"
+        android:name="com.example.trackyourmoney.ui.fixkosten_aendern.FixkostenAendernActivity"
+        android:label="@string/menu_fixkosten_aendern"
+        tools:layout="@layout/activity_fixkosten_aendern" />
+
+    <activity
+        android:id="@+id/nav_budget_aendern"
+        android:name="com.example.trackyourmoney.ui.budget_aendern.BudgetAendernActivity"
+        android:label="@string/menu_budget_aendern"
+        tools:layout="@layout/activity_budget_aendern" />
+
+    <activity
+        android:id="@+id/nav_ausgabe_hinzufuegen"
+        android:name="com.example.trackyourmoney.ui.ausgabe_hinzufuegen.AusgabeHinzufuegenActivity"
+        android:label="@string/menu_ausgabe_hinzufuegen"
+        tools:layout="@layout/activity_ausgabe_hinzufuegen" />
+
+    <activity
+        android:id="@+id/nav_einnahme_hinzufuegen"
+        android:name="com.example.trackyourmoney.ui.einnahme_hinzufügen.EinnahmeHinzufuegenActivity"
+        android:label="@string/menu_einnahme_hinzufuegen"
+        tools:layout="@layout/activity_einnahme_hinzufuegen" />
+
+    <activity
+        android:id="@+id/nav_ausgabenlimit_aendern"
+        android:name="com.example.trackyourmoney.ui.ausgabenlimit_aendern.AusgabenlimitAendernActivity"
+        android:label="@string/menu_ausgabenlimit_aendern"
+        tools:layout="@layout/activity_ausgabenlimit_aendern" />
 </navigation>

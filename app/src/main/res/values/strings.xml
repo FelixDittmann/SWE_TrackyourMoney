@@ -8,8 +8,14 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_analyse">Analyse</string>
+    <string name="menu_fixkosten">Fixkosten</string>
+    <string name="menu_ausgaben">Ausgaben</string>
+    <string name="menu_fixkosten_aendern">Fixkosten</string>
+    <string name="menu_budget_aendern">Budget</string>
+    <string name="menu_ausgabe_hinzufuegen">Ausgabe</string>
+    <string name="menu_ausgabenlimit_aendern">Ausgabenlimit</string>
+    <string name="menu_einnahme_hinzufuegen">Einnahme</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
