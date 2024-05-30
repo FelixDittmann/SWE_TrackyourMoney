@@ -3,22 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+    <item android:title="Anzeigen"/>
+
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/home_icon"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:id="@+id/nav_analyse"
+            android:icon="@drawable/analyse_icon"
+            android:title="@string/menu_analyse" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/nav_fixkosten"
+            android:icon="@drawable/fixkosten_icon"
+            android:title="@string/menu_fixkosten" />
         <item
-            android:id="@+id/nav_addausgabe"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_addausgabe" />
+            android:id="@+id/nav_ausgaben"
+            android:icon="@drawable/ausgabe_icon"
+            android:title="@string/menu_ausgaben" />
+    </group>
+
+    <item android:title="Hinzufügen/Anpassen"/>
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_fixkosten_aendern"
+            android:icon="@drawable/fixkosten_icon"
+            android:title="@string/menu_fixkosten_aendern" />
+        <item
+            android:id="@+id/nav_budget_aendern"
+            android:icon="@drawable/budget_icon"
+            android:title="@string/menu_budget_aendern" />
+        <item
+            android:id="@+id/nav_ausgabe_hinzufuegen"
+            android:icon="@drawable/ausgabe_icon"
+            android:title="@string/menu_ausgabe_hinzufuegen" />
+        <item
+            android:id="@+id/nav_einnahme_hinzufuegen"
+            android:icon="@drawable/ausgabe_icon"
+            android:title="@string/menu_einnahme_hinzufuegen"/>
+        <item
+            android:id="@+id/nav_ausgabenlimit_aendern"
+            android:icon="@drawable/ausgabenlimit_icon"
+            android:title="@string/menu_ausgabenlimit_aendern" />
     </group>
 </menu>

@@ -16,6 +16,7 @@ public class Ausgabe extends Posten{
     public long id;
     public String name;
     public double betrag;
+    public String anmerkungen;
     public long date;
     public Long kategorieId; // Foreign key reference to Kategorie table
     public boolean wiederholend;

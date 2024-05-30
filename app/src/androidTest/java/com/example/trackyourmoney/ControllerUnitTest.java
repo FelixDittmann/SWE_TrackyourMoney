@@ -31,7 +31,6 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class ControllerUnitTest {
 
-
     private AppDataBase database;
     private EinnahmeDAO einnahmeDao;
     private AusgabeDAO ausgabeDao;
@@ -54,6 +53,7 @@ public class ControllerUnitTest {
         Kategorie kat = new Kategorie("ersteKategorie", 300.0);
         katId = kategorieDao.insert(kat);
     }
+
     @Test
     public void addAndRemoveEinnahme() {
         // Add an Einnahme
@@ -105,7 +105,6 @@ public class ControllerUnitTest {
         ausgaben = ausgabeDao.getAllAusgaben();
         assertTrue(ausgaben.isEmpty());
     }
-
 
     @Test
     public void addNewCategory() {
