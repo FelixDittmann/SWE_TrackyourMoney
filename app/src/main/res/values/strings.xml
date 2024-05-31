@@ -16,6 +16,7 @@
     <string name="menu_ausgabe_hinzufuegen">Ausgabe</string>
     <string name="menu_ausgabenlimit_aendern">Ausgabenlimit</string>
     <string name="menu_einnahme_hinzufuegen">Einnahme</string>
+    <string name="menu_kategorie_erstellen_loeschen">Kategorien</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
