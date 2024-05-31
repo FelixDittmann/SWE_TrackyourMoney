@@ -1,5 +1,6 @@
 package com.example.trackyourmoney.ui.kategorie_hinzufuegen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
 import com.example.trackyourmoney.R;
+import com.example.trackyourmoney.ui.kategorie_erstellen_loeschen.KategorieErstellenLoeschenActivity;
 import com.trackyourmoney.java.AppDataBase;
 import com.trackyourmoney.java.Ausgabe;
 import com.trackyourmoney.java.AusgabeDAO;
@@ -69,12 +71,15 @@ public class KategorieHinzufuegenActivity extends AppCompatActivity {
         if(validation == ""){
             Kategorie neueKategorie = new Kategorie(kategorie, budget);
             db.kategorieDao().insert(neueKategorie);
-            List<Kategorie> Kategorien = db.kategorieDao().getAllKategorien();
 
             //Ausflistung der Vorhandenen Kategorien
+            List<Kategorie> Kategorien = db.kategorieDao().getAllKategorien();
             for (Kategorie list: Kategorien){
-                Log.d("", list.id + " " + list.name + " " + list.budget);
+                Log.d("Kategorien", list.id + " " + list.name + " " + list.budget);
             }
         }
+
+        Intent intent = new Intent(this, KategorieErstellenLoeschenActivity.class);
+        startActivity(intent);
     }
 }

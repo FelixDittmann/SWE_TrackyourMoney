@@ -44,7 +44,6 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
     TextView textView;
     TextView textView9;
     AppDataBase db;
-    AusgabeDAO ausgabeDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +67,8 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.testView);
         textView9 = (TextView) findViewById(R.id.textView9);
 
-        db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
-        ausgabeDao = db.ausgabeDao();
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDataBase.class, "App-database").allowMainThreadQueries().build();
         wiederholendInput.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -118,7 +117,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
         //TODO kategorie auslese
         //kategorieId = Long.valueOf(kategorieIdInput.getText().toString());
-        kategorieId = 2;
+        kategorieId = 1;
 
         if(wiederholendInput.isChecked()){
             wiederholend = true;
@@ -147,22 +146,12 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
     public void hinzufuegen(){
         Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, date, wiederholend, kategorieId, wiederholungsintervall);
-        //TODO find out why next line always crashes app
-        ausgabeDao.insert(neueAusgabe);
+
+        db.ausgabeDao().insert(neueAusgabe);
 
         List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
         for (Ausgabe list: Ausgaben){
-            Log.d("Ausgaben", list.name + " " + list.betrag + " " + list.anmerkungen + " " + list.date + " " + list.wiederholend + " " + list.kategorieId + " " + list.wiederholungsintervall);
-        }
-    }
-
-    public void visibilityChange(){
-        Log.d("Test", "Teest");
-        if(wiederholend){
-            wiederholungsintervallInput.setVisibility(View.INVISIBLE);
-        }
-        else{
-            wiederholungsintervallInput.setVisibility(View.VISIBLE);
+            Log.d("Ausgaben", list.id + " " + list.name + " " + list.betrag + " " + list.anmerkungen + " " + list.date + " " + list.wiederholend + " " + list.kategorieId + " " + list.wiederholungsintervall);
         }
     }
 }
