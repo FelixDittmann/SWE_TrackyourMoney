@@ -11,7 +11,7 @@ public class Kategorie {
     public long id;
 
     public String name;
-    private Double budget;
+    public Double budget;
 
     public Kategorie(String name, Double budget) {
         this.name = name;

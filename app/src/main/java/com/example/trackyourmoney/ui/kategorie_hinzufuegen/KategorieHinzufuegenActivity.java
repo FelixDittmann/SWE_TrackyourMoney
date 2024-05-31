@@ -11,11 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.room.Room;
 
 import com.example.trackyourmoney.R;
 import com.trackyourmoney.java.AppDataBase;
+import com.trackyourmoney.java.Ausgabe;
 import com.trackyourmoney.java.AusgabeDAO;
+import com.trackyourmoney.java.DatabaseClient;
 import com.trackyourmoney.java.Kategorie;
+import com.trackyourmoney.java.KategorieDAO;
+
+import java.util.List;
 
 public class KategorieHinzufuegenActivity extends AppCompatActivity {
 
@@ -27,7 +33,6 @@ public class KategorieHinzufuegenActivity extends AppCompatActivity {
     TextView validationTextView;
 
     AppDataBase db;
-    AusgabeDAO ausgabeDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,9 @@ public class KategorieHinzufuegenActivity extends AppCompatActivity {
         kategorieInput = (EditText) findViewById(R.id.kategorieInput);
         budgetInput = (EditText) findViewById(R.id.budgetInput);
         validationTextView = (TextView) findViewById(R.id.validationTextView);
+
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDataBase.class, "App-database").allowMainThreadQueries().build();
     }
 
     public void hinzufuegen(View view){
@@ -58,6 +66,15 @@ public class KategorieHinzufuegenActivity extends AppCompatActivity {
         }
         validationTextView.setText(validation);
 
-        Kategorie neueKategorie = new Kategorie(kategorie, budget);
+        if(validation == ""){
+            Kategorie neueKategorie = new Kategorie(kategorie, budget);
+            db.kategorieDao().insert(neueKategorie);
+            List<Kategorie> Kategorien = db.kategorieDao().getAllKategorien();
+
+            //Ausflistung der Vorhandenen Kategorien
+            for (Kategorie list: Kategorien){
+                Log.d("", list.id + " " + list.name + " " + list.budget);
+            }
+        }
     }
 }
