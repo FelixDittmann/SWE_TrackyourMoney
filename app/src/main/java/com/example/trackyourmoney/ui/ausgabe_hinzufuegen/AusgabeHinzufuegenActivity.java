@@ -3,6 +3,8 @@ package com.example.trackyourmoney.ui.ausgabe_hinzufuegen;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,17 +22,21 @@ import com.trackyourmoney.java.AppDataBase;
 import com.trackyourmoney.java.Ausgabe;
 import com.trackyourmoney.java.AusgabeDAO;
 import com.trackyourmoney.java.DatabaseClient;
+import com.trackyourmoney.java.Kategorie;
 
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Toast;
 
 import java.util.List;
 
 public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
     String name, anmerkungen;
+    String[] alleKategorien;
     double betrag;
     long date, kategorieId;
+    long[] alleIds;
     boolean wiederholend;
     int wiederholungsintervall;
 
@@ -69,6 +75,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDataBase.class, "App-database").allowMainThreadQueries().build();
+
         wiederholendInput.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -84,20 +91,31 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         });
 
         //TODO Kategorie und Id aus Datenbank auslesen und in Relation abspeichern
-        //String[][] kategorien = ;
-        //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, kategorien);
-        //kategorieIdInput.setAdapter(adapter);
+        List<Kategorie> Kategorien = db.kategorieDao().getAllKategorien();
+
+        alleKategorien = new String[Kategorien.size()];
+        alleIds = new long[Kategorien.size()];
+        int i = 0;
+        for (Kategorie list: Kategorien){
+            alleKategorien[i] = list.name;
+            alleIds[i] = list.id;
+            i++;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, alleKategorien);
+        kategorieIdInput.setAdapter(adapter);
     }
 
     public void validation(View view) {
         //TODO validation algorithm
         String valid = "";
 
+        //Name
         name = nameInput.getText().toString();
         if(name.trim().length() < 1){
             valid += "Bitte Name der Kategorie eingeben!\n";
         }
 
+        //Betrag
         try {
             betrag = Double.valueOf(betragInput.getText().toString());
             if(betrag == 0){
@@ -107,18 +125,26 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
             valid += "Unzul채ssiger Betrag!\n";
         }
 
+        //Anmerkungen
         anmerkungen = anmerkungenInput.getText().toString();
 
+        //Datum
         try {
             date = Long.valueOf(dateInput.getText().toString());
         } catch (Exception e) {
             valid += "Unzul채ssige Datumsschreibweise!\n";
         }
 
-        //TODO kategorie auslese
-        //kategorieId = Long.valueOf(kategorieIdInput.getText().toString());
-        kategorieId = 1;
+        //KategorieID
+        String kategorieEingabe = kategorieIdInput.getSelectedItem().toString();
+        for(int i = 0; i < alleKategorien.length; i++){
+            if(kategorieEingabe == alleKategorien[i]){
+                kategorieId = alleIds[i];
+            }
+        }
+        //Toast.makeText(this, String.valueOf(kategorieId), Toast.LENGTH_LONG).show();
 
+        //Wiederholend?
         if(wiederholendInput.isChecked()){
             wiederholend = true;
         }
@@ -126,6 +152,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
             wiederholend = false;
         }
 
+        //Wiederholungsintervall
         if(wiederholend){
             try {
                 wiederholungsintervall = Integer.valueOf(wiederholungsintervallInput.getText().toString());
@@ -137,6 +164,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
             wiederholungsintervall = -1;
         }
 
+        //Ausgabe hinzufügen falls alle Eingaben valide
         textView.setText(valid);
 
         if (valid == ""){
