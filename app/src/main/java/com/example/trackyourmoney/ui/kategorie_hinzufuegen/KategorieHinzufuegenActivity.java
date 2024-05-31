@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,10 +20,11 @@ import com.trackyourmoney.java.Kategorie;
 public class KategorieHinzufuegenActivity extends AppCompatActivity {
 
     String kategorie;
-    Double budget;
+    double budget;
 
     EditText kategorieInput;
     EditText budgetInput;
+    TextView validationTextView;
 
     AppDataBase db;
     AusgabeDAO ausgabeDao;
@@ -39,11 +41,23 @@ public class KategorieHinzufuegenActivity extends AppCompatActivity {
         });
         kategorieInput = (EditText) findViewById(R.id.kategorieInput);
         budgetInput = (EditText) findViewById(R.id.budgetInput);
+        validationTextView = (TextView) findViewById(R.id.validationTextView);
     }
 
     public void hinzufuegen(View view){
         kategorie = kategorieInput.getText().toString();
-        budget = Double.valueOf(budgetInput.getText().toString());
+        String validation = "";
+        if(kategorie.trim().length() < 1){
+            validation += "Bitte Name der Kategorie eingeben!\n";
+        }
+        try{
+            budget = Double.valueOf(budgetInput.getText().toString());
+        }
+        catch(Exception e){
+            validation += "Budget entspricht nicht den Anforderungen!";
+        }
+        validationTextView.setText(validation);
+
         Kategorie neueKategorie = new Kategorie(kategorie, budget);
     }
 }

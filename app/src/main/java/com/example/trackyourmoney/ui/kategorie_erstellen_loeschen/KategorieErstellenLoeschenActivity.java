@@ -1,5 +1,6 @@
 package com.example.trackyourmoney.ui.kategorie_erstellen_loeschen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.trackyourmoney.R;
+import com.example.trackyourmoney.ui.kategorie_hinzufuegen.KategorieHinzufuegenActivity;
 
 public class KategorieErstellenLoeschenActivity extends AppCompatActivity {
     @Override
@@ -25,6 +27,7 @@ public class KategorieErstellenLoeschenActivity extends AppCompatActivity {
     }
 
     public void switchView(View view){
-        setContentView(R.layout.activity_kategorie_hinzufuegen);
+        Intent intent = new Intent(this, KategorieHinzufuegenActivity.class);
+        startActivity(intent);
     }
 }

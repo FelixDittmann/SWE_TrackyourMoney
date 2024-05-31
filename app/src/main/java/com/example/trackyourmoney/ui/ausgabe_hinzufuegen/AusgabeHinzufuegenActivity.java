@@ -21,6 +21,9 @@ import com.trackyourmoney.java.Ausgabe;
 import com.trackyourmoney.java.AusgabeDAO;
 import com.trackyourmoney.java.DatabaseClient;
 
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+
 import java.util.List;
 
 public class AusgabeHinzufuegenActivity extends AppCompatActivity {
@@ -39,6 +42,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
     CheckBox wiederholendInput;
     EditText wiederholungsintervallInput;
     TextView textView;
+    TextView textView9;
     AppDataBase db;
     AusgabeDAO ausgabeDao;
 
@@ -62,9 +66,23 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         wiederholungsintervallInput = (EditText) findViewById(R.id.wiederholungsintervallInput);
 
         textView = (TextView) findViewById(R.id.testView);
+        textView9 = (TextView) findViewById(R.id.textView9);
 
         db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
-        AusgabeDAO ausgabeDao = db.ausgabeDao();
+        ausgabeDao = db.ausgabeDao();
+        wiederholendInput.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(wiederholendInput.isChecked()){
+                    wiederholungsintervallInput.setVisibility(View.VISIBLE);
+                    textView9.setVisibility(View.VISIBLE);
+                }
+                else{
+                    wiederholungsintervallInput.setVisibility(View.INVISIBLE);
+                    textView9.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
 
         //TODO Kategorie und Id aus Datenbank auslesen und in Relation abspeichern
         //String[][] kategorien = ;
@@ -75,22 +93,40 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
     public void validation(View view) {
         //TODO validation algorithm
         String valid = "";
+
         name = nameInput.getText().toString();
+        if(name.trim().length() < 1){
+            valid += "Bitte Name der Kategorie eingeben!\n";
+        }
+
         try {
             betrag = Double.valueOf(betragInput.getText().toString());
+            if(betrag == 0){
+                betrag = 1/0;
+            }
         } catch (Exception e) {
             valid += "Unzul채ssiger Betrag!\n";
         }
+
         anmerkungen = anmerkungenInput.getText().toString();
+
         try {
             date = Long.valueOf(dateInput.getText().toString());
         } catch (Exception e) {
             valid += "Unzul채ssige Datumsschreibweise!\n";
         }
+
         //TODO kategorie auslese
         //kategorieId = Long.valueOf(kategorieIdInput.getText().toString());
         kategorieId = 2;
-        wiederholend = Boolean.valueOf(wiederholendInput.getText().toString());
+
+        if(wiederholendInput.isChecked()){
+            wiederholend = true;
+        }
+        else{
+            wiederholend = false;
+        }
+
         if(wiederholend){
             try {
                 wiederholungsintervall = Integer.valueOf(wiederholungsintervallInput.getText().toString());
@@ -111,11 +147,22 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
     public void hinzufuegen(){
         Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, date, wiederholend, kategorieId, wiederholungsintervall);
-        //db.ausgabeDAO.insert(neueAusgabe);
+        //TODO find out why next line always crashes app
+        ausgabeDao.insert(neueAusgabe);
 
         List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
         for (Ausgabe list: Ausgaben){
             Log.d("Ausgaben", list.name + " " + list.betrag + " " + list.anmerkungen + " " + list.date + " " + list.wiederholend + " " + list.kategorieId + " " + list.wiederholungsintervall);
+        }
+    }
+
+    public void visibilityChange(){
+        Log.d("Test", "Teest");
+        if(wiederholend){
+            wiederholungsintervallInput.setVisibility(View.INVISIBLE);
+        }
+        else{
+            wiederholungsintervallInput.setVisibility(View.VISIBLE);
         }
     }
 }

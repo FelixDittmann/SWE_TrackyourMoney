@@ -62,7 +62,7 @@
     </ScrollView>
 
     <ImageButton
-        android:id="@+id/imageButton_add_ausgaben"
+        android:id="@+id/add_category"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:backgroundTint="@color/cardview_shadow_end_color"
@@ -121,9 +121,21 @@
         android:ems="10"
         android:inputType="text"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/imageButton_add_ausgaben"
+        app:layout_constraintBottom_toTopOf="@+id/add_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/validationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text=""
+        android:textColor="@color/design_default_color_error"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/budgetInput" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

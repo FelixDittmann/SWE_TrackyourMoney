@@ -29,6 +29,11 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    /*public void switchView(View view){
+        Intent intent = new Intent(this, AusgabeHinzufuegenActivity.class);
+        startActivity(intent);
+    }*/
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
