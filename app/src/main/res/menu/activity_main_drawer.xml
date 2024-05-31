@@ -26,7 +26,6 @@
 
     <item android:title="Hinzufügen/Anpassen"/>
 
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_fixkosten_aendern"
@@ -48,5 +47,9 @@
             android:id="@+id/nav_ausgabenlimit_aendern"
             android:icon="@drawable/ausgabenlimit_icon"
             android:title="@string/menu_ausgabenlimit_aendern" />
+        <item
+            android:id="@+id/nav_kategorie"
+            android:icon="@drawable/ausgabe_icon"
+            android:title="@string/menu_kategorie_erstellen_loeschen" />
     </group>
 </menu>
