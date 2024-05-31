@@ -1,6 +1,7 @@
 package com.example.trackyourmoney.ui.kategorie_erstellen_loeschen;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +12,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.trackyourmoney.R;
 
 public class KategorieErstellenLoeschenActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,5 +22,9 @@ public class KategorieErstellenLoeschenActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void switchView(View view){
+        setContentView(R.layout.activity_kategorie_hinzufuegen);
     }
 }

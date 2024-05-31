@@ -18,6 +18,8 @@ import androidx.room.Room;
 import com.example.trackyourmoney.R;
 import com.trackyourmoney.java.AppDataBase;
 import com.trackyourmoney.java.Ausgabe;
+import com.trackyourmoney.java.AusgabeDAO;
+import com.trackyourmoney.java.DatabaseClient;
 
 import java.util.List;
 
@@ -37,7 +39,8 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
     CheckBox wiederholendInput;
     EditText wiederholungsintervallInput;
     TextView textView;
-    AppDataBase adb;
+    AppDataBase db;
+    AusgabeDAO ausgabeDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +63,8 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
         textView = (TextView) findViewById(R.id.testView);
 
-        adb = Room.databaseBuilder(getApplicationContext(),
-                AppDataBase.class, "app-database").build();
+        db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
+        AusgabeDAO ausgabeDao = db.ausgabeDao();
 
         //TODO Kategorie und Id aus Datenbank auslesen und in Relation abspeichern
         //String[][] kategorien = ;
@@ -84,26 +87,33 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         } catch (Exception e) {
             valid += "Unzul채ssige Datumsschreibweise!\n";
         }
+        //TODO kategorie auslese
         //kategorieId = Long.valueOf(kategorieIdInput.getText().toString());
         kategorieId = 2;
         wiederholend = Boolean.valueOf(wiederholendInput.getText().toString());
-        try {
-            wiederholungsintervall = Integer.valueOf(wiederholungsintervallInput.getText().toString());
-        } catch (Exception e) {
-            valid += "Falsche Angabe des Wiederholungsintervalls!";
+        if(wiederholend){
+            try {
+                wiederholungsintervall = Integer.valueOf(wiederholungsintervallInput.getText().toString());
+            } catch (Exception e) {
+                valid += "Falsche Angabe des Wiederholungsintervalls!";
+            }
         }
+        else{
+            wiederholungsintervall = -1;
+        }
+
         textView.setText(valid);
 
         if (valid == ""){
-            hinzuf체gen();
+            hinzufuegen();
         }
     }
 
-    public void hinzuf체gen(){
-        Ausgabe ausgabe = new Ausgabe(name, betrag, anmerkungen, date, wiederholend, kategorieId, wiederholungsintervall);
-        adb.ausgabeDao().insert(ausgabe);
+    public void hinzufuegen(){
+        Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, date, wiederholend, kategorieId, wiederholungsintervall);
+        //db.ausgabeDAO.insert(neueAusgabe);
 
-        List<Ausgabe> Ausgaben = adb.ausgabeDao().getAllAusgaben();
+        List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
         for (Ausgabe list: Ausgaben){
             Log.d("Ausgaben", list.name + " " + list.betrag + " " + list.anmerkungen + " " + list.date + " " + list.wiederholend + " " + list.kategorieId + " " + list.wiederholungsintervall);
         }

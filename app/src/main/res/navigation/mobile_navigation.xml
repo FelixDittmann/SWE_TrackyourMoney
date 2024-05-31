@@ -54,6 +54,12 @@
         tools:layout="@layout/activity_einnahme_hinzufuegen" />
 
     <activity
+        android:id="@+id/nav_kategorie_erstellen_loeschen"
+        android:name="com.example.trackyourmoney.ui.kategorie_erstellen_loeschen.KategorieErstellenLoeschenActivity"
+        android:label="@string/menu_kategorie_erstellen_loeschen"
+        tools:layout="@layout/activity_kategorie_erstellen_loeschen" />
+
+    <activity
         android:id="@+id/nav_ausgabenlimit_aendern"
         android:name="com.example.trackyourmoney.ui.ausgabenlimit_aendern.AusgabenlimitAendernActivity"
         android:label="@string/menu_ausgabenlimit_aendern"

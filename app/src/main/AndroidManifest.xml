@@ -19,6 +19,9 @@
             android:name=".ui.kategorie_erstellen_loeschen.KategorieErstellenLoeschenActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.kategorie_hinzufuegen.KategorieHinzufuegenActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.einnahme_hinzufügen.EinnahmeHinzufuegenActivity"
             android:exported="false" />
         <activity

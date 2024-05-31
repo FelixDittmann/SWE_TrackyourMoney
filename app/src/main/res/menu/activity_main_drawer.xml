@@ -44,12 +44,12 @@
             android:icon="@drawable/ausgabe_icon"
             android:title="@string/menu_einnahme_hinzufuegen"/>
         <item
+            android:id="@+id/nav_kategorie_erstellen_loeschen"
+            android:icon="@drawable/fixkosten_icon"
+            android:title="@string/menu_kategorie_erstellen_loeschen" />
+        <item
             android:id="@+id/nav_ausgabenlimit_aendern"
             android:icon="@drawable/ausgabenlimit_icon"
             android:title="@string/menu_ausgabenlimit_aendern" />
-        <item
-            android:id="@+id/nav_kategorie"
-            android:icon="@drawable/ausgabe_icon"
-            android:title="@string/menu_kategorie_erstellen_loeschen" />
     </group>
 </menu>

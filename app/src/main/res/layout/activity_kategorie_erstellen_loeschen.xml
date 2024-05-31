@@ -23,7 +23,8 @@
         android:visibility="visible"
         app:icon="@android:drawable/ic_menu_sort_by_size"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:id="@+id/text_home"
@@ -39,7 +40,7 @@
 
     <ImageButton
         android:id="@+id/submitButton"
-        android:onClick="validation"
+        android:onClick="switchView"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginBottom="32dp"
