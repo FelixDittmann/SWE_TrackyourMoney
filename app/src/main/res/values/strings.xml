@@ -11,6 +11,7 @@
     <string name="menu_analyse">Analyse</string>
     <string name="menu_fixkosten">Fixkosten</string>
     <string name="menu_ausgaben">Ausgaben</string>
+    <string name="menu_einnahmen">Einnahmen</string>
     <string name="menu_fixkosten_aendern">Fixkosten</string>
     <string name="menu_budget_aendern">Budget</string>
     <string name="menu_ausgabe_hinzufuegen">Ausgabe</string>

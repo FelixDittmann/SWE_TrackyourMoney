@@ -1,5 +1,6 @@
 package com.example.trackyourmoney.ui.ausgabe_hinzufuegen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
+import com.example.trackyourmoney.MainActivity;
 import com.example.trackyourmoney.R;
 import com.trackyourmoney.java.AppDataBase;
 import com.trackyourmoney.java.Ausgabe;
@@ -204,5 +206,10 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         for (Ausgabe list: Ausgaben){
             Log.d("Ausgaben", "Id:" + list.id + " Name:" + list.name + " Betrag:" + list.betrag + " Anmerkungen:" + list.anmerkungen + " Datum:" + list.date + " Wiederholung?:" + list.wiederholend + " KategorieID:" + list.kategorieId + " Wiederholungsintervall:" + list.wiederholungsintervall);
         }
+    }
+
+    public void seiteZurueck(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

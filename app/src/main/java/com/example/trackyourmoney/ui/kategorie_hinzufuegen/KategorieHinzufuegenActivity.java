@@ -2,7 +2,6 @@ package com.example.trackyourmoney.ui.kategorie_hinzufuegen;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,16 +14,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
+import com.example.trackyourmoney.MainActivity;
 import com.example.trackyourmoney.R;
-import com.example.trackyourmoney.ui.kategorie_erstellen_loeschen.KategorieErstellenLoeschenActivity;
+import com.example.trackyourmoney.ui.kategorie_erstellen_loeschen.KategorieActivity;
 import com.trackyourmoney.java.AppDataBase;
-import com.trackyourmoney.java.Ausgabe;
-import com.trackyourmoney.java.AusgabeDAO;
-import com.trackyourmoney.java.DatabaseClient;
 import com.trackyourmoney.java.Kategorie;
-import com.trackyourmoney.java.KategorieDAO;
-
-import java.util.List;
 
 public class KategorieHinzufuegenActivity extends AppCompatActivity {
 
@@ -75,7 +69,12 @@ public class KategorieHinzufuegenActivity extends AppCompatActivity {
         }
 
         Toast.makeText(this, "Kategorie '" + kategorie + "' hinzugefügt!", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, KategorieErstellenLoeschenActivity.class);
+        Intent intent = new Intent(this, KategorieActivity.class);
+        startActivity(intent);
+    }
+
+    public void seiteZurueck(View view){
+        Intent intent = new Intent(this, KategorieActivity.class);
         startActivity(intent);
     }
 }

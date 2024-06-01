@@ -22,6 +22,10 @@
             android:id="@+id/nav_ausgaben"
             android:icon="@drawable/ausgabe_icon"
             android:title="@string/menu_ausgaben" />
+        <item
+            android:id="@+id/nav_einnahmen"
+            android:icon="@drawable/einnahme_icon"
+            android:title="@string/menu_einnahmen" />
     </group>
 
     <item android:title="Hinzufügen/Anpassen"/>

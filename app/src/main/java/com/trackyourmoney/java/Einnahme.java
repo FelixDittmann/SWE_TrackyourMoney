@@ -26,7 +26,6 @@ public class Einnahme extends Posten{
     public Einnahme(){
 
     }
-
     public Einnahme(String name, double wert, String anmerkungen, long datum, boolean wiederholend, long kategorie, int wiederholungsintervall) {
         this.name = name;
         this.value = wert;

@@ -16,7 +16,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/alata"
-        android:text="Kategorie hinzufuegen"
+        android:text="Kategorie hinzufügen"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="45sp"
@@ -33,17 +33,18 @@
         style="@android:style/Widget.Holo.Light.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginBottom="24dp"
         android:background="@color/cardview_shadow_end_color"
         android:backgroundTint="@color/cardview_shadow_end_color"
         android:drawableTint="#FBF8F8"
-        android:text="Menu"
+        android:text="Zurück"
         android:textColor="@color/white"
         android:visibility="visible"
-        app:icon="@android:drawable/ic_menu_sort_by_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:onClick="seiteZurueck"
+        app:icon="@drawable/back_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_category"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView2"

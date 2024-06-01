@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
+import com.example.trackyourmoney.MainActivity;
 import com.example.trackyourmoney.R;
 import com.example.trackyourmoney.ui.kategorie_hinzufuegen.KategorieHinzufuegenActivity;
 import com.trackyourmoney.java.AppDataBase;
@@ -20,7 +21,7 @@ import com.trackyourmoney.java.Kategorie;
 
 import java.util.List;
 
-public class KategorieErstellenLoeschenActivity extends AppCompatActivity {
+public class KategorieActivity extends AppCompatActivity {
 
     String kategorie;
     String budget;
@@ -65,6 +66,11 @@ public class KategorieErstellenLoeschenActivity extends AppCompatActivity {
 
     public void switchView(View view){
         Intent intent = new Intent(this, KategorieHinzufuegenActivity.class);
+        startActivity(intent);
+    }
+
+    public void seiteZurueck(View view){
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

@@ -28,20 +28,22 @@
         app:layout_constraintVertical_bias="0.085" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/backButton"
         style="@android:style/Widget.Holo.Light.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginBottom="45dp"
         android:background="@color/cardview_shadow_end_color"
         android:backgroundTint="@color/cardview_shadow_end_color"
         android:drawableTint="#FBF8F8"
-        android:text="Menu"
+        android:text="Zurück"
         android:textColor="@color/white"
         android:visibility="visible"
-        app:icon="@android:drawable/ic_menu_sort_by_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:onClick="seiteZurueck"
+        app:icon="@drawable/back_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
         android:layout_width="352dp"
@@ -62,7 +64,7 @@
         android:id="@+id/imageButton_eingabe_hinzufuegen"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginStart="75dp"
+        android:layout_marginStart="50dp"
         android:layout_marginBottom="36dp"
         android:backgroundTint="@color/cardview_shadow_end_color"
         android:src="@drawable/plus"
@@ -74,7 +76,7 @@
         android:id="@+id/imageButton_ausgabe_hinzufuegen_hinzufuegen"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginEnd="75dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="36dp"
         android:backgroundTint="@color/cardview_shadow_end_color"
 

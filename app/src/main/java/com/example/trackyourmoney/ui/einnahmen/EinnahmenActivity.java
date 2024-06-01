@@ -1,4 +1,4 @@
-package com.example.trackyourmoney.ui.ausgaben;
+package com.example.trackyourmoney.ui.einnahmen;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +13,13 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.trackyourmoney.MainActivity;
 import com.example.trackyourmoney.R;
 
-public class AusgabenActivity extends AppCompatActivity {
+public class EinnahmenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_ausgaben);
+        setContentView(R.layout.activity_einnahmen);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

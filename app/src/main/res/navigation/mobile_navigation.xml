@@ -30,6 +30,12 @@
         tools:layout="@layout/activity_ausgaben" />
 
     <activity
+        android:id="@+id/nav_einnahmen"
+        android:name="com.example.trackyourmoney.ui.einnahmen.EinnahmenActivity"
+        android:label="@string/menu_einnahmen"
+        tools:layout="@layout/activity_einnahmen" />
+
+    <activity
         android:id="@+id/nav_fixkosten_aendern"
         android:name="com.example.trackyourmoney.ui.fixkosten_aendern.FixkostenAendernActivity"
         android:label="@string/menu_fixkosten_aendern"
@@ -55,7 +61,7 @@
 
     <activity
         android:id="@+id/nav_kategorie_erstellen_loeschen"
-        android:name="com.example.trackyourmoney.ui.kategorie_erstellen_loeschen.KategorieErstellenLoeschenActivity"
+        android:name="com.example.trackyourmoney.ui.kategorie_erstellen_loeschen.KategorieActivity"
         android:label="@string/menu_kategorie_erstellen_loeschen"
         tools:layout="@layout/activity_kategorie_erstellen_loeschen" />
 
