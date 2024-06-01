@@ -31,7 +31,7 @@ public class Einnahme extends Posten{
         this.name = name;
         this.value = wert;
         this.anmerkungen = anmerkungen;
-        this.datum = datum;
+        this.date = datum;
         this.kategorieId = kategorie;
         this.wiederholend = wiederholend;
         this.wiederholungsintervall = wiederholungsintervall;
