@@ -176,6 +176,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, date, wiederholend, kategorieId, wiederholungsintervall);
 
         db.ausgabeDao().insert(neueAusgabe);
+        Toast.makeText(this, "Ausgabe '" + name + "' hinzugefügt!", Toast.LENGTH_LONG).show();
 
         List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
         for (Ausgabe list: Ausgaben){
