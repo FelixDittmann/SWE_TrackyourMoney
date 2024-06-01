@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,14 +72,9 @@ public class KategorieHinzufuegenActivity extends AppCompatActivity {
         if(validation == ""){
             Kategorie neueKategorie = new Kategorie(kategorie, budget);
             db.kategorieDao().insert(neueKategorie);
-
-            //Ausflistung der Vorhandenen Kategorien
-            List<Kategorie> Kategorien = db.kategorieDao().getAllKategorien();
-            for (Kategorie list: Kategorien){
-                Log.d("Kategorien", list.id + " " + list.name + " " + list.budget);
-            }
         }
 
+        Toast.makeText(this, "Kategorie '" + kategorie + "' hinzugefügt!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, KategorieErstellenLoeschenActivity.class);
         startActivity(intent);
     }

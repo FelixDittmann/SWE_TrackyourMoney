@@ -3,6 +3,8 @@ package com.example.trackyourmoney.ui.ausgabe_hinzufuegen;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,19 +22,23 @@ import com.trackyourmoney.java.AppDataBase;
 import com.trackyourmoney.java.Ausgabe;
 import com.trackyourmoney.java.AusgabeDAO;
 import com.trackyourmoney.java.DatabaseClient;
+import com.trackyourmoney.java.Kategorie;
 
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
-    String name, anmerkungen;
-    double betrag;
-    long date, kategorieId;
-    boolean wiederholend;
-    int wiederholungsintervall;
+    String[] alleKategorien;
+    long[] alleIds;
 
     EditText nameInput;
     EditText betragInput;
@@ -69,6 +75,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDataBase.class, "App-database").allowMainThreadQueries().build();
+
         wiederholendInput.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -84,41 +91,80 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         });
 
         //TODO Kategorie und Id aus Datenbank auslesen und in Relation abspeichern
-        //String[][] kategorien = ;
-        //ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, kategorien);
-        //kategorieIdInput.setAdapter(adapter);
+        List<Kategorie> Kategorien = db.kategorieDao().getAllKategorien();
+
+        alleKategorien = new String[Kategorien.size()];
+        alleIds = new long[Kategorien.size()];
+        int i = 0;
+        for (Kategorie list: Kategorien){
+            alleKategorien[i] = list.name;
+            alleIds[i] = list.id;
+            i++;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, alleKategorien);
+        kategorieIdInput.setAdapter(adapter);
+
+        List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
+        for (Ausgabe list: Ausgaben){
+            Log.d("Ausgaben", "Id:" + list.id + " Name:" + list.name + " Betrag:" + list.betrag + " Anmerkungen:" + list.anmerkungen + " Datum:" + list.date + " Wiederholung?:" + list.wiederholend + " KategorieID:" + list.kategorieId + " Wiederholungsintervall:" + list.wiederholungsintervall);
+            Toast.makeText(this, String.valueOf(list.betrag), Toast.LENGTH_LONG).show();
+        }
     }
 
     public void validation(View view) {
         //TODO validation algorithm
         String valid = "";
 
-        name = nameInput.getText().toString();
+        //Name
+         String name = nameInput.getText().toString();
         if(name.trim().length() < 1){
             valid += "Bitte Name der Kategorie eingeben!\n";
         }
 
+        //Betrag
+        double betrag = 0;
         try {
             betrag = Double.valueOf(betragInput.getText().toString());
             if(betrag == 0){
                 betrag = 1/0;
             }
+
         } catch (Exception e) {
             valid += "Unzul채ssiger Betrag!\n";
         }
 
-        anmerkungen = anmerkungenInput.getText().toString();
+        //Anmerkungen
+        String anmerkungen = anmerkungenInput.getText().toString();
 
+        //Datum
+        long dateOffset = 0;
         try {
-            date = Long.valueOf(dateInput.getText().toString());
+            String dateString = dateInput.getText().toString();
+            String startDateString = "01.01.1900";
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            Date date = formatter.parse(dateString);
+            Date startDate = formatter.parse(startDateString);
+            long diffInMillies = date.getTime() - startDate.getTime();
+            if(diffInMillies < 0){
+                diffInMillies = 1/0;
+            }
+            dateOffset = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             valid += "Unzul채ssige Datumsschreibweise!\n";
         }
 
-        //TODO kategorie auslese
-        //kategorieId = Long.valueOf(kategorieIdInput.getText().toString());
-        kategorieId = 1;
+        //KategorieID
+        long kategorieId = 0;
+        String kategorieEingabe = kategorieIdInput.getSelectedItem().toString();
+        for(int i = 0; i < alleKategorien.length; i++){
+            if(kategorieEingabe == alleKategorien[i]){
+                kategorieId = alleIds[i];
+            }
+        }
 
+        //Wiederholend?
+        boolean wiederholend;
         if(wiederholendInput.isChecked()){
             wiederholend = true;
         }
@@ -126,6 +172,8 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
             wiederholend = false;
         }
 
+        //Wiederholungsintervall
+        int wiederholungsintervall = 0;
         if(wiederholend){
             try {
                 wiederholungsintervall = Integer.valueOf(wiederholungsintervallInput.getText().toString());
@@ -137,21 +185,24 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
             wiederholungsintervall = -1;
         }
 
+        //Ausgabe hinzufügen falls alle Eingaben valide
         textView.setText(valid);
 
         if (valid == ""){
-            hinzufuegen();
+            hinzufuegen(name, betrag, anmerkungen, dateOffset, wiederholend, kategorieId, wiederholungsintervall);
         }
     }
 
-    public void hinzufuegen(){
-        Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, date, wiederholend, kategorieId, wiederholungsintervall);
+    public void hinzufuegen(String name, double betrag, String anmerkungen, long dateOffset, boolean wiederholend, long kategorieId, int wiederholungsintervall){
+
+        Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, dateOffset, wiederholend, kategorieId, wiederholungsintervall);
 
         db.ausgabeDao().insert(neueAusgabe);
+        Toast.makeText(this, "Ausgabe '" + name + "' hinzugefügt!", Toast.LENGTH_LONG).show();
 
         List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
         for (Ausgabe list: Ausgaben){
-            Log.d("Ausgaben", list.id + " " + list.name + " " + list.betrag + " " + list.anmerkungen + " " + list.date + " " + list.wiederholend + " " + list.kategorieId + " " + list.wiederholungsintervall);
+            Log.d("Ausgaben", "Id:" + list.id + " Name:" + list.name + " Betrag:" + list.betrag + " Anmerkungen:" + list.anmerkungen + " Datum:" + list.date + " Wiederholung?:" + list.wiederholend + " KategorieID:" + list.kategorieId + " Wiederholungsintervall:" + list.wiederholungsintervall);
         }
     }
 }
