@@ -12,6 +12,7 @@ import java.util.Date;
         childColumns = "kategorieId",
         onDelete = ForeignKey.CASCADE))
 public class Ausgabe extends Posten{
+
     @PrimaryKey(autoGenerate = true)
     public long id;
     public String name;

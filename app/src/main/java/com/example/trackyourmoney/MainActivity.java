@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Menu;
 
 import com.example.trackyourmoney.ui.ausgabe_hinzufuegen.AusgabeHinzufuegenActivity;
+import com.example.trackyourmoney.ui.einnahme_hinzufügen.EinnahmeHinzufuegenActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -70,8 +71,13 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void switchView(View view){
+    public void switchViewAusgaben(View view){
         Intent intent = new Intent(this, AusgabeHinzufuegenActivity.class);
+        startActivity(intent);
+    }
+
+    public void switchViewEinnahmen(View view){
+        Intent intent = new Intent(this, EinnahmeHinzufuegenActivity.class);
         startActivity(intent);
     }
 }

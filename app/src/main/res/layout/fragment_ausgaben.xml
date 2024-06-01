@@ -59,21 +59,29 @@
     </ScrollView>
 
     <ImageButton
-        android:id="@+id/imageButton_add_ausgaben"
+        android:id="@+id/imageButton_eingabe_hinzufuegen"
         android:layout_width="75dp"
         android:layout_height="75dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginBottom="36dp"
         android:backgroundTint="@color/cardview_shadow_end_color"
         android:src="@drawable/plus"
         android:visibility="visible"
-        app:flow_horizontalAlign="center"
-        app:flow_verticalAlign="bottom"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight="wrap_content"
-        app:layout_constraintHeight_default="wrap"
-        app:layout_constraintHeight_max="wrap"
-        app:layout_constraintHeight_min="wrap"
-        app:layout_constraintWidth="wrap_content"
-        app:layout_constraintWidth_max="wrap"
-        tools:layout_editor_absoluteX="156dp" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton_ausgabe_hinzufuegen_hinzufuegen"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="36dp"
+        android:backgroundTint="@color/cardview_shadow_end_color"
+
+        android:onClick="validation"
+        android:src="@drawable/minus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
