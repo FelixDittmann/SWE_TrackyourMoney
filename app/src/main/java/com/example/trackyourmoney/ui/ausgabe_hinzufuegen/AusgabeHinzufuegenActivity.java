@@ -37,13 +37,8 @@ import java.util.concurrent.TimeUnit;
 
 public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
-    String name, anmerkungen;
     String[] alleKategorien;
-    double betrag;
-    long dateOffset, kategorieId;
     long[] alleIds;
-    boolean wiederholend;
-    int wiederholungsintervall;
 
     EditText nameInput;
     EditText betragInput;
@@ -108,6 +103,12 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, alleKategorien);
         kategorieIdInput.setAdapter(adapter);
+
+        List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
+        for (Ausgabe list: Ausgaben){
+            Log.d("Ausgaben", "Id:" + list.id + " Name:" + list.name + " Betrag:" + list.betrag + " Anmerkungen:" + list.anmerkungen + " Datum:" + list.date + " Wiederholung?:" + list.wiederholend + " KategorieID:" + list.kategorieId + " Wiederholungsintervall:" + list.wiederholungsintervall);
+            Toast.makeText(this, String.valueOf(list.betrag), Toast.LENGTH_LONG).show();
+        }
     }
 
     public void validation(View view) {
@@ -115,25 +116,28 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         String valid = "";
 
         //Name
-        name = nameInput.getText().toString();
+         String name = nameInput.getText().toString();
         if(name.trim().length() < 1){
             valid += "Bitte Name der Kategorie eingeben!\n";
         }
 
         //Betrag
+        double betrag = 0;
         try {
             betrag = Double.valueOf(betragInput.getText().toString());
             if(betrag == 0){
                 betrag = 1/0;
             }
+
         } catch (Exception e) {
             valid += "Unzul채ssiger Betrag!\n";
         }
 
         //Anmerkungen
-        anmerkungen = anmerkungenInput.getText().toString();
+        String anmerkungen = anmerkungenInput.getText().toString();
 
         //Datum
+        long dateOffset = 0;
         try {
             String dateString = dateInput.getText().toString();
             String startDateString = "01.01.1900";
@@ -151,6 +155,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         }
 
         //KategorieID
+        long kategorieId = 0;
         String kategorieEingabe = kategorieIdInput.getSelectedItem().toString();
         for(int i = 0; i < alleKategorien.length; i++){
             if(kategorieEingabe == alleKategorien[i]){
@@ -159,6 +164,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         }
 
         //Wiederholend?
+        boolean wiederholend;
         if(wiederholendInput.isChecked()){
             wiederholend = true;
         }
@@ -167,6 +173,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         }
 
         //Wiederholungsintervall
+        int wiederholungsintervall = 0;
         if(wiederholend){
             try {
                 wiederholungsintervall = Integer.valueOf(wiederholungsintervallInput.getText().toString());
@@ -182,19 +189,20 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         textView.setText(valid);
 
         if (valid == ""){
-            hinzufuegen();
+            hinzufuegen(name, betrag, anmerkungen, dateOffset, wiederholend, kategorieId, wiederholungsintervall);
         }
     }
 
-    public void hinzufuegen(){
-        /*Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, dateOffset, wiederholend, kategorieId, wiederholungsintervall);
+    public void hinzufuegen(String name, double betrag, String anmerkungen, long dateOffset, boolean wiederholend, long kategorieId, int wiederholungsintervall){
+
+        Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, dateOffset, wiederholend, kategorieId, wiederholungsintervall);
 
         db.ausgabeDao().insert(neueAusgabe);
         Toast.makeText(this, "Ausgabe '" + name + "' hinzugefügt!", Toast.LENGTH_LONG).show();
 
         List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
         for (Ausgabe list: Ausgaben){
-            Log.d("Ausgaben", list.id + " " + list.name + " " + list.betrag + " " + list.anmerkungen + " " + list.date + " " + list.wiederholend + " " + list.kategorieId + " " + list.wiederholungsintervall);
-        }*/
+            Log.d("Ausgaben", "Id:" + list.id + " Name:" + list.name + " Betrag:" + list.betrag + " Anmerkungen:" + list.anmerkungen + " Datum:" + list.date + " Wiederholung?:" + list.wiederholend + " KategorieID:" + list.kategorieId + " Wiederholungsintervall:" + list.wiederholungsintervall);
+        }
     }
 }
