@@ -28,14 +28,19 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
     String name, anmerkungen;
     String[] alleKategorien;
     double betrag;
-    long date, kategorieId;
+    long dateOffset, kategorieId;
     long[] alleIds;
     boolean wiederholend;
     int wiederholungsintervall;
@@ -130,7 +135,17 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
         //Datum
         try {
-            date = Long.valueOf(dateInput.getText().toString());
+            String dateString = dateInput.getText().toString();
+            String startDateString = "01.01.1900";
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+            Date date = formatter.parse(dateString);
+            Date startDate = formatter.parse(startDateString);
+            long diffInMillies = date.getTime() - startDate.getTime();
+            if(diffInMillies < 0){
+                diffInMillies = 1/0;
+            }
+            dateOffset = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             valid += "Unzul채ssige Datumsschreibweise!\n";
         }
@@ -142,7 +157,6 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
                 kategorieId = alleIds[i];
             }
         }
-        //Toast.makeText(this, String.valueOf(kategorieId), Toast.LENGTH_LONG).show();
 
         //Wiederholend?
         if(wiederholendInput.isChecked()){
@@ -173,7 +187,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
     }
 
     public void hinzufuegen(){
-        Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, date, wiederholend, kategorieId, wiederholungsintervall);
+        /*Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, dateOffset, wiederholend, kategorieId, wiederholungsintervall);
 
         db.ausgabeDao().insert(neueAusgabe);
         Toast.makeText(this, "Ausgabe '" + name + "' hinzugefügt!", Toast.LENGTH_LONG).show();
@@ -181,6 +195,6 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
         for (Ausgabe list: Ausgaben){
             Log.d("Ausgaben", list.id + " " + list.name + " " + list.betrag + " " + list.anmerkungen + " " + list.date + " " + list.wiederholend + " " + list.kategorieId + " " + list.wiederholungsintervall);
-        }
+        }*/
     }
 }
