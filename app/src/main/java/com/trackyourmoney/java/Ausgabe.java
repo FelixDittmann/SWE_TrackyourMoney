@@ -26,9 +26,9 @@ public class Ausgabe extends Posten{
     }
     public Ausgabe(String name, double wert, String anmerkungen, long datum, boolean wiederholend, Long kategorie, int wiederholungsintervall) {
         this.name = name;
-        this.value = wert;
+        this.betrag = wert;
         this.anmerkungen = anmerkungen;
-        this.datum = datum;
+        this.date = datum;
         this.kategorieId = kategorie;
         this.wiederholend = wiederholend;
         this.wiederholungsintervall = wiederholungsintervall;
