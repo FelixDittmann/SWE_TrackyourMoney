@@ -66,7 +66,7 @@ public class EinnahmenFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView (LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
          String[] einnahmenlisteArray = {
@@ -92,7 +92,7 @@ public class EinnahmenFragment extends Fragment {
 
         List<String> einnahmenListe = new ArrayList<>(Arrays.asList(einnahmenlisteArray));
 
-        ArrayAdapter<String> aktienlisteAdapter =
+        ArrayAdapter<String> einnahmelisteAdapter =
                 new ArrayAdapter<>(
                         getActivity(), // Die aktuelle Umgebung (diese Activity)
                         R.layout.list_item_einnahmenliste, // ID der XML-Layout Datei
@@ -104,6 +104,4 @@ public class EinnahmenFragment extends Fragment {
 
         return inflater.inflate(R.layout.fragment_einnahmen, container, false);
     }
-
-
 }

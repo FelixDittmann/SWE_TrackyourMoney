@@ -16,15 +16,17 @@
         android:background="@color/cardview_shadow_end_color"
         android:backgroundTint="@color/cardview_shadow_end_color"
         android:drawableTint="#FBF8F8"
+        android:onClick="seiteZurueck"
         android:text="Zurück"
         android:textColor="@color/white"
         android:visibility="visible"
-        android:onClick="seiteZurueck"
         app:icon="@drawable/back_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/submitButton"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wiederholungsintervallInput" />
+        app:layout_constraintTop_toBottomOf="@+id/wiederholungsintervallInput"
+        app:layout_constraintVertical_bias="0.505" />
 
     <TextView
         android:id="@+id/text_home"
