@@ -28,10 +28,10 @@ public interface AusgabeDAO {
     @Query("SELECT a.* FROM Ausgabe a " +
             "INNER JOIN Kategorie k ON a.kategorieId = k.id " +
             "WHERE k.name = :kategorieName")
-    List<Einnahme> getAusgabenForKategorieName(String kategorieName);
+    List<Ausgabe> getAusgabenForKategorieName(String kategorieName);
 
-    @Query("SELECT a.* FROM Einnahme a " +
+    @Query("SELECT a.* FROM Ausgabe a " +
             "INNER JOIN Kategorie k ON a.kategorieId = k.id " +
             "WHERE k.name = :kategorieName AND a.value BETWEEN :minBetrag AND :maxBetrag")
-    List<Einnahme> getAusgabenForKategorieNameAndBetragRange(String kategorieName, double minBetrag, double maxBetrag);
+    List<Ausgabe> getAusgabenForKategorieNameAndBetragRange(String kategorieName, double minBetrag, double maxBetrag);
 }

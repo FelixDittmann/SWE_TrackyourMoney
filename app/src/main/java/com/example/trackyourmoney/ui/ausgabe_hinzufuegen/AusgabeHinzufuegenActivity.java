@@ -128,7 +128,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         try {
             betrag = Double.valueOf(betragInput.getText().toString());
             if(betrag == 0){
-                betrag = 1/0;
+                throw new RuntimeException("invalid betrag");
             }
 
         } catch (Exception e) {
@@ -139,19 +139,12 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         String anmerkungen = anmerkungenInput.getText().toString();
 
         //Datum
-        long dateOffset = 0;
+        Date date = new Date();
         try {
             String dateString = dateInput.getText().toString();
-            String startDateString = "01.01.1900";
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-            Date date = formatter.parse(dateString);
-            Date startDate = formatter.parse(startDateString);
-            long diffInMillies = date.getTime() - startDate.getTime();
-            if(diffInMillies < 0){
-                diffInMillies = 1/0;
-            }
-            dateOffset = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            date = formatter.parse(dateString);
         } catch (Exception e) {
             valid += "Unzul채ssige Datumsschreibweise!\n";
         }
@@ -191,13 +184,13 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         textView.setText(valid);
 
         if (valid == ""){
-            hinzufuegen(name, betrag, anmerkungen, dateOffset, wiederholend, kategorieId, wiederholungsintervall);
+            hinzufuegen(name, betrag, anmerkungen, date, wiederholend, kategorieId, wiederholungsintervall);
         }
     }
 
-    public void hinzufuegen(String name, double betrag, String anmerkungen, long dateOffset, boolean wiederholend, long kategorieId, int wiederholungsintervall){
+    public void hinzufuegen(String name, double betrag, String anmerkungen, Date date, boolean wiederholend, long kategorieId, int wiederholungsintervall){
 
-        Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, dateOffset, wiederholend, kategorieId, wiederholungsintervall);
+        Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, date, wiederholend, kategorieId, wiederholungsintervall);
 
         db.ausgabeDao().insert(neueAusgabe);
         Toast.makeText(this, "Ausgabe '" + name + "' hinzugefügt!", Toast.LENGTH_LONG).show();

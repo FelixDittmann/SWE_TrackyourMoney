@@ -3,6 +3,7 @@ package com.trackyourmoney.java;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.time.OffsetDateTime;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.Date;
         parentColumns = "id",
         childColumns = "kategorieId",
         onDelete = ForeignKey.CASCADE))
+@TypeConverters(DateConverter.class)
 public class Ausgabe extends Posten{
 
     @PrimaryKey(autoGenerate = true)
@@ -18,14 +20,14 @@ public class Ausgabe extends Posten{
     public String name;
     public double betrag;
     public String anmerkungen;
-    public long date;
+    public Date date;
     public Long kategorieId; // Foreign key reference to Kategorie table
     public boolean wiederholend;
     public int wiederholungsintervall;
     public Ausgabe() {
 
     }
-    public Ausgabe(String name, double wert, String anmerkungen, long datum, boolean wiederholend, Long kategorie, int wiederholungsintervall) {
+    public Ausgabe(String name, double wert, String anmerkungen, Date datum, boolean wiederholend, Long kategorie, int wiederholungsintervall) {
         this.name = name;
         this.betrag = wert;
         this.anmerkungen = anmerkungen;
