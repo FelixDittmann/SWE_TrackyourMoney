@@ -67,7 +67,7 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:backgroundTint="@color/cardview_shadow_end_color"
-        android:src="@drawable/plus"
+        android:src="@drawable/minus"
         android:visibility="visible"
         app:flow_horizontalAlign="center"
         app:flow_verticalAlign="bottom"

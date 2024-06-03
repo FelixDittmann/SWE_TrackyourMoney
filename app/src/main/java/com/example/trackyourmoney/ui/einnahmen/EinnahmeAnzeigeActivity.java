@@ -1,10 +1,9 @@
-package com.example.trackyourmoney.ui.ausgaben;
+package com.example.trackyourmoney.ui.einnahmen;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,22 +13,24 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
 import com.example.trackyourmoney.R;
-import com.example.trackyourmoney.ui.einnahme_hinzufügen.EinnahmeHinzufuegenActivity;
+import com.example.trackyourmoney.ui.ausgaben.AusgabenActivity;
 import com.trackyourmoney.java.AppDataBase;
 import com.trackyourmoney.java.Ausgabe;
 import com.trackyourmoney.java.AusgabeDAO;
+import com.trackyourmoney.java.Einnahme;
+import com.trackyourmoney.java.EinnahmeDAO;
 
-public class AusgabeAnzeigeActivity extends AppCompatActivity {
+public class EinnahmeAnzeigeActivity extends AppCompatActivity {
 
     static long selectedId;
     AppDataBase db;
-    AusgabeDAO ausgabeDao;
+    EinnahmeDAO einnahmeDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_ausgabe_anzeige);
+        setContentView(R.layout.activity_einnahme_anzeige);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -38,19 +39,14 @@ public class AusgabeAnzeigeActivity extends AppCompatActivity {
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDataBase.class, "App-database").allowMainThreadQueries().build();
-        ausgabeDao = db.ausgabeDao();
-
+        einnahmeDao = db.einnahmeDao();
     }
 
-    public void deleteAusgabe(View view){
-        Log.d("Test", "1");
-        Ausgabe zuLoeschendeAusgabe = ausgabeDao.findById(selectedId);
-        Log.d("Test", "2");
-        Log.d("Test", String.valueOf(selectedId));
-        ausgabeDao.delete(zuLoeschendeAusgabe);
-        Log.d("Test", "3");
+    public void deleteEinnahme(View view){
+        Einnahme zuLoeschendeEinnahme = einnahmeDao.findById(selectedId);
+        einnahmeDao.delete(zuLoeschendeEinnahme);
 
-        Intent intent = new Intent(this, AusgabenActivity.class);
+        Intent intent = new Intent(this, EinnahmenActivity.class);
         startActivity(intent);
     }
 }
