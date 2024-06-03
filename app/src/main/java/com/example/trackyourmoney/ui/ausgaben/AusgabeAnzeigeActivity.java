@@ -94,7 +94,11 @@ public class AusgabeAnzeigeActivity extends AppCompatActivity {
         });
 
         //TODO Datum vorher richtig konvertieren
-        dateInput.setText(String.valueOf(currentAusgabe.date));
+        SimpleDateFormat targetFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date date = currentAusgabe.date;
+        String newDate = targetFormat.format(date);
+
+        dateInput.setText(newDate);
 
         nameInput.setText(currentAusgabe.name);
         betragInput.setText(String.valueOf(currentAusgabe.betrag));
