@@ -16,6 +16,9 @@
         android:theme="@style/Theme.TrackyourMoney"
         tools:targetApi="31">
         <activity
+            android:name=".ui.ausgaben.AusgabeAnzeigeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.einnahmen.EinnahmenActivity"
             android:exported="false" />
         <activity

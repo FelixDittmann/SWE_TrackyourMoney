@@ -82,7 +82,6 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:fontFamily="@font/alata"
-                android:textColor="@color/white"
                 android:textAlignment="center"
                 android:textSize="34sp" />
 

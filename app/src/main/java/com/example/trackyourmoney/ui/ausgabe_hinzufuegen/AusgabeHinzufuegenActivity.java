@@ -20,6 +20,7 @@ import androidx.room.Room;
 
 import com.example.trackyourmoney.MainActivity;
 import com.example.trackyourmoney.R;
+import com.example.trackyourmoney.ui.ausgaben.AusgabenActivity;
 import com.trackyourmoney.java.AppDataBase;
 import com.trackyourmoney.java.Ausgabe;
 import com.trackyourmoney.java.AusgabeDAO;
@@ -198,7 +199,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
     }
 
     public void seiteZurueck(View view){
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, AusgabenActivity.class);
         startActivity(intent);
     }
 }

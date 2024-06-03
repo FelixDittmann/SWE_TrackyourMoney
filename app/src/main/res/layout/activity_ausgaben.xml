@@ -47,6 +47,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="352dp"
         android:layout_height="723dp"
         app:layout_constraintHeight="wrap_content"
@@ -78,6 +79,16 @@
         app:layout_constraintHeight_min="wrap"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth="wrap_content"
-        app:layout_constraintWidth_max="wrap" />
+        app:layout_constraintWidth_max="wrap"
+        android:onClick="switchView"/>
+
+    <ListView
+        android:id="@+id/ausgaben_liste"
+        android:layout_width="409dp"
+        android:layout_height="385dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton_add_ausgaben"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_home" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
