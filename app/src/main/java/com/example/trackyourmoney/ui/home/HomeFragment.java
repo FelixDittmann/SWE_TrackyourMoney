@@ -1,5 +1,7 @@
 package com.example.trackyourmoney.ui.home;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
 
+import com.example.trackyourmoney.R;
 import com.example.trackyourmoney.databinding.FragmentHomeBinding;
+import com.trackyourmoney.java.AppDataBase;
 
 public class HomeFragment extends Fragment {
 
@@ -24,15 +29,10 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        // homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView monthlyBudget = binding.textHome;
+        //homeViewModel.getText().observe(getViewLifecycleOwner(), monthlyBudget::setText);
         return root;
     }
-
-    /*public void switchView(View view){
-        Intent intent = new Intent(this, AusgabeHinzufuegenActivity.class);
-        startActivity(intent);
-    }*/
 
     @Override
     public void onDestroyView() {

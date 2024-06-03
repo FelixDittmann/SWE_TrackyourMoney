@@ -106,11 +106,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, alleKategorien);
         kategorieIdInput.setAdapter(adapter);
 
-        List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
-        for (Ausgabe list: Ausgaben){
-            Log.d("Ausgaben", "Id:" + list.id + " Name:" + list.name + " Betrag:" + list.betrag + " Anmerkungen:" + list.anmerkungen + " Datum:" + list.date + " Wiederholung?:" + list.wiederholend + " KategorieID:" + list.kategorieId + " Wiederholungsintervall:" + list.wiederholungsintervall);
-            Toast.makeText(this, String.valueOf(list.betrag), Toast.LENGTH_LONG).show();
-        }
+
     }
 
     public void validation(View view) {

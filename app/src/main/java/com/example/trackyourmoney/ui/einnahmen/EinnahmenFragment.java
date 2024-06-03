@@ -99,8 +99,8 @@ public class EinnahmenFragment extends Fragment {
                         R.id.list_item_einnahmenliste_textview, // ID des TextViews
                         einnahmenListe); // Beispieldaten in einer ArrayList
 
-        ListView einnahmelisteListView = (ListView) rootView.findViewById(R.id.listview_einnahmenliste);
-        einnahmelisteListView.setAdapter(einnahmelisteAdapter);
+        //ListView einnahmelisteListView = (ListView) rootView.findViewById(R.id.listview_einnahmenliste);
+        //einnahmelisteListView.setAdapter(einnahmelisteAdapter);
 
         return inflater.inflate(R.layout.fragment_einnahmen, container, false);
     }

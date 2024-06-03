@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.trackyourmoney.ui.ausgabe_hinzufuegen.AusgabeHinzufuegenActivity;
 import com.example.trackyourmoney.ui.einnahme_hinzufügen.EinnahmeHinzufuegenActivity;
@@ -16,13 +18,19 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.example.trackyourmoney.databinding.ActivityMainBinding;
 import com.trackyourmoney.java.AppDataBase;
+import com.trackyourmoney.java.Ausgabe;
 import com.trackyourmoney.java.AusgabeDAO;
 import com.trackyourmoney.java.DatabaseClient;
+import com.trackyourmoney.java.Einnahme;
 import com.trackyourmoney.java.EinnahmeDAO;
+import com.trackyourmoney.java.Kategorie;
 import com.trackyourmoney.java.KategorieDAO;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,13 +42,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        AppDataBase db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
+       /* AppDataBase db = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase();
         EinnahmeDAO einnahmeDao = db.einnahmeDao();
         AusgabeDAO ausgabeDao = db.ausgabeDao();
-        KategorieDAO kategorieDao = db.kategorieDao();
+        KategorieDAO kategorieDao = db.kategorieDao();*/
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        AppDataBase db = Room.databaseBuilder(getApplicationContext(),
+                AppDataBase.class, "App-database").allowMainThreadQueries().build();
+
+        TextView monthlybudget = (TextView) findViewById(R.id.monthlybudget);
+        TextView used_Budget = (TextView) findViewById(R.id.used_budget);
+
+        List<Kategorie> Kategorien = db.kategorieDao().getAllKategorien();
+        double usableBudget = 0;
+        for (Kategorie list: Kategorien){
+            usableBudget += list.budget;
+        }
+        monthlybudget.setText(String.valueOf(usableBudget));
+
+        List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
+        double usedBudget = 0;
+        for (Ausgabe list: Ausgaben){
+            usedBudget += list.betrag;
+        }
+        List<Einnahme> Einnahmen = db.einnahmeDao().getAllEinnahmen();
+        for (Einnahme list: Einnahmen){
+            usedBudget -= list.value;
+        }
+        used_Budget.setText(String.valueOf(usedBudget));
+
+        TextView unused_Budget = (TextView) findViewById(R.id.unused_budget);
+        unused_Budget.setText(String.valueOf(usableBudget - usedBudget));
+
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
