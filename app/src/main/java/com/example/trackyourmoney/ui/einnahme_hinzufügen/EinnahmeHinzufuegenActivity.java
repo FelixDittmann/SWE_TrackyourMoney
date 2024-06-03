@@ -110,7 +110,6 @@ public class EinnahmeHinzufuegenActivity extends AppCompatActivity {
         List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
         for (Ausgabe list: Ausgaben){
             Log.d("Eingaben", "Id:" + list.id + " Name:" + list.name + " Betrag:" + list.betrag + " Anmerkungen:" + list.anmerkungen + " Datum:" + list.date + " Wiederholung?:" + list.wiederholend + " KategorieID:" + list.kategorieId + " Wiederholungsintervall:" + list.wiederholungsintervall);
-            Toast.makeText(this, String.valueOf(list.betrag), Toast.LENGTH_LONG).show();
         }
     }
 
