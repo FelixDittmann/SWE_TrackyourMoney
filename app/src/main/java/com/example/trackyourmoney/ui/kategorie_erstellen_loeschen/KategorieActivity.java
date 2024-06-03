@@ -51,6 +51,7 @@ public class KategorieActivity extends AppCompatActivity {
         int i = 0;
         for (Kategorie list: Kategorien){
             kategorieList[i] = "Name: " + list.name + ", Budget: " + list.budget;
+            i++;
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, kategorieList);
