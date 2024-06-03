@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -22,10 +24,7 @@ import com.trackyourmoney.java.Kategorie;
 import java.util.List;
 
 public class KategorieActivity extends AppCompatActivity {
-
-    String kategorie;
-    String budget;
-    TextView AnzeigeKategorie, AnzeigeBudget;
+    ListView kategorie_list;
     AppDataBase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +36,8 @@ public class KategorieActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        kategorie = "";
-        budget = "";
 
-        AnzeigeKategorie = (TextView) findViewById(R.id.AnzeigeKategorien);
-        AnzeigeBudget = (TextView) findViewById(R.id.AnzeigeBudget);
+        kategorie_list = (ListView) findViewById(R.id.kategorie_list);
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDataBase.class, "App-database").allowMainThreadQueries().build();
@@ -50,18 +46,16 @@ public class KategorieActivity extends AppCompatActivity {
 
     public void updateGUI(){
         List<Kategorie> Kategorien = db.kategorieDao().getAllKategorien();
+        String[] kategorieList = new String[Kategorien.size()];
 
+        int i = 0;
         for (Kategorie list: Kategorien){
-            Log.d("Kategorien", list.id + " " + list.name + " " + list.budget);
+            kategorieList[i] = "Name: " + list.name + ", Budget: " + list.budget;
         }
 
-        for (Kategorie list: Kategorien){
-            kategorie += list.name + "\n";
-            budget += list.budget + "\n";
-        }
-        Log.d("Test", kategorie + " " + budget);
-        AnzeigeKategorie.setText(kategorie);
-        AnzeigeBudget.setText(budget);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, kategorieList);
+        kategorie_list.setAdapter(adapter);
+
     }
 
     public void switchView(View view){
