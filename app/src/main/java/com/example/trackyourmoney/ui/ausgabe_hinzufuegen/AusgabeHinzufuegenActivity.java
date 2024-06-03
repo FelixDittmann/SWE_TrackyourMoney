@@ -93,7 +93,6 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
             }
         });
 
-        //TODO Kategorie und Id aus Datenbank auslesen und in Relation abspeichern
         List<Kategorie> Kategorien = db.kategorieDao().getAllKategorien();
 
         alleKategorien = new String[Kategorien.size()];
@@ -111,7 +110,6 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
     }
 
     public void validation(View view) {
-        //TODO validation algorithm
         String valid = "";
 
         //Name
