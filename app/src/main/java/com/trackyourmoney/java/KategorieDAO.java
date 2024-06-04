@@ -22,4 +22,10 @@ public interface KategorieDAO {
     @Query("SELECT * FROM Kategorie")
     List<Kategorie> getAllKategorien();
 
+    @Query("SELECT * FROM Kategorie WHERE id = :katid")
+    Kategorie getKategorieById(long katid);
+
+    @Query("SELECT * FROM Kategorie WHERE name = :name")
+    List<Kategorie> getKategorieByName(String name);
+
 }
