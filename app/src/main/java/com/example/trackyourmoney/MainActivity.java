@@ -2,6 +2,7 @@ package com.example.trackyourmoney;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
@@ -54,16 +55,17 @@ public class MainActivity extends AppCompatActivity {
         AppDataBase db = Room.databaseBuilder(getApplicationContext(),
                 AppDataBase.class, "App-database").allowMainThreadQueries().build();
 
+        //monatsbudget
         TextView monthlybudget = (TextView) findViewById(R.id.monthlybudget);
-        TextView used_Budget = (TextView) findViewById(R.id.used_budget);
-
         List<Kategorie> Kategorien = db.kategorieDao().getAllKategorien();
         double usableBudget = 0;
         for (Kategorie list: Kategorien){
             usableBudget += list.budget;
         }
-        monthlybudget.setText(String.valueOf(usableBudget));
+        monthlybudget.setText(werteAnpassen(String.valueOf(usableBudget)));
 
+        //verwendetes Budget
+        TextView used_Budget = (TextView) findViewById(R.id.used_budget);
         List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
         double usedBudget = 0;
         for (Ausgabe list: Ausgaben){
@@ -73,10 +75,12 @@ public class MainActivity extends AppCompatActivity {
         for (Einnahme list: Einnahmen){
             usedBudget -= list.value;
         }
-        used_Budget.setText(String.valueOf(usedBudget));
+        used_Budget.setText(werteAnpassen(String.valueOf(usedBudget)));
 
+        //Restbudget
         TextView unused_Budget = (TextView) findViewById(R.id.unused_budget);
-        unused_Budget.setText(String.valueOf(usableBudget - usedBudget));
+        String StringUnusedBudget = String.valueOf(usableBudget - usedBudget);
+        unused_Budget.setText(werteAnpassen(StringUnusedBudget));
 
 
         setSupportActionBar(binding.appBarMain.toolbar);
@@ -116,6 +120,29 @@ public class MainActivity extends AppCompatActivity {
     public void switchViewEinnahmen(View view){
         Intent intent = new Intent(this, EinnahmeHinzufuegenActivity.class);
         startActivity(intent);
+    }
+
+    public String werteAnpassen(String wert){
+        wert += "00";
+        int index = wert.indexOf(".");
+        String vorkomma = wert.substring(0,index);
+        int nachkomma = Integer.valueOf(wert.substring(index+1, index+3));
+        int uebertrag = Integer.valueOf(wert.substring(index+3,index+4));
+        if(uebertrag >= 5){
+            nachkomma += 1;
+        }
+        if(nachkomma == 100){
+            nachkomma = 0;
+            vorkomma += 1;
+        }
+        String newString;
+        if(nachkomma < 10){
+            newString = vorkomma + ".0" + nachkomma;
+        }
+        else{
+            newString = vorkomma + "." + nachkomma;
+        }
+        return newString;
     }
 
 

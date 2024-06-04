@@ -93,7 +93,7 @@ public class AusgabeAnzeigeActivity extends AppCompatActivity {
             }
         });
 
-        //TODO Datum vorher richtig konvertieren
+        //Datum vorher richtig konvertieren
         SimpleDateFormat targetFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date date = currentAusgabe.date;
         String newDate = targetFormat.format(date);
@@ -101,7 +101,7 @@ public class AusgabeAnzeigeActivity extends AppCompatActivity {
         dateInput.setText(newDate);
 
         nameInput.setText(currentAusgabe.name);
-        betragInput.setText(String.valueOf(currentAusgabe.betrag));
+        betragInput.setText(werteAnpassen(String.valueOf(currentAusgabe.betrag)));
         anmerkungenInput.setText(currentAusgabe.anmerkungen);
         wiederholungsintervallInput.setText(String.valueOf(currentAusgabe.wiederholungsintervall));
 
@@ -131,6 +131,8 @@ public class AusgabeAnzeigeActivity extends AppCompatActivity {
     public void deleteAusgabe(View view){
         Ausgabe zuLoeschendeAusgabe = ausgabeDao.findById(selectedId);
         ausgabeDao.delete(zuLoeschendeAusgabe);
+
+        Toast.makeText(this, "Ausgabe '" + zuLoeschendeAusgabe.name + "' geloescht!", Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(this, AusgabenActivity.class);
         startActivity(intent);
@@ -223,7 +225,32 @@ public class AusgabeAnzeigeActivity extends AppCompatActivity {
 
         ausgabeDao.update(zuBearbeitendeAusgabe);
 
+        Toast.makeText(this, "Ausgabe '" + name + "' bearbeitet!", Toast.LENGTH_LONG).show();
+
         Intent intent = new Intent(this, AusgabenActivity.class);
         startActivity(intent);
+    }
+
+    public String werteAnpassen(String wert){
+        wert += "00";
+        int index = wert.indexOf(".");
+        String vorkomma = wert.substring(0,index);
+        int nachkomma = Integer.valueOf(wert.substring(index+1, index+3));
+        int uebertrag = Integer.valueOf(wert.substring(index+3,index+4));
+        if(uebertrag >= 5){
+            nachkomma += 1;
+        }
+        if(nachkomma == 100){
+            nachkomma = 0;
+            vorkomma += 1;
+        }
+        String newString;
+        if(nachkomma < 10){
+            newString = vorkomma + ".0" + nachkomma;
+        }
+        else{
+            newString = vorkomma + "." + nachkomma;
+        }
+        return newString;
     }
 }

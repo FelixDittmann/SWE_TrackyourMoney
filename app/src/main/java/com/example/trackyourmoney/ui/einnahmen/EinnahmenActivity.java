@@ -27,6 +27,8 @@ import com.trackyourmoney.java.AppDataBase;
 import com.trackyourmoney.java.Ausgabe;
 import com.trackyourmoney.java.Einnahme;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class EinnahmenActivity extends AppCompatActivity {
@@ -54,8 +56,11 @@ public class EinnahmenActivity extends AppCompatActivity {
         alleIds = new long[Einnahmen.size()];
         alleEinnahmenString = new String[Einnahmen.size()];;
         int i = 0;
+        SimpleDateFormat targetFormat = new SimpleDateFormat("dd.MM.yyyy");
         for (Einnahme list: Einnahmen){
-            alleEinnahmenString[i] = list.name + ", " + list.value + ", " + list.date;
+            Date date = list.date;
+            String newDate = targetFormat.format(date);
+            alleEinnahmenString[i] = list.name + ", " + werteAnpassen(String.valueOf(list.value)) + ", " + newDate;
             alleIds[i] = list.id;
             i++;
         }
@@ -96,5 +101,28 @@ public class EinnahmenActivity extends AppCompatActivity {
     public void switchView(View view){
         Intent intent = new Intent(this, EinnahmeHinzufuegenActivity.class);
         startActivity(intent);
+    }
+
+    public String werteAnpassen(String wert){
+        wert += "00";
+        int index = wert.indexOf(".");
+        String vorkomma = wert.substring(0,index);
+        int nachkomma = Integer.valueOf(wert.substring(index+1, index+3));
+        int uebertrag = Integer.valueOf(wert.substring(index+3,index+4));
+        if(uebertrag >= 5){
+            nachkomma += 1;
+        }
+        if(nachkomma == 100){
+            nachkomma = 0;
+            vorkomma += 1;
+        }
+        String newString;
+        if(nachkomma < 10){
+            newString = vorkomma + ".0" + nachkomma;
+        }
+        else{
+            newString = vorkomma + "." + nachkomma;
+        }
+        return newString;
     }
 }

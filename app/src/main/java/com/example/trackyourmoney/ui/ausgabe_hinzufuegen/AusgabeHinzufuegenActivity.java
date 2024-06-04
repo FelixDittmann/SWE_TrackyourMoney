@@ -21,6 +21,7 @@ import androidx.room.Room;
 import com.example.trackyourmoney.MainActivity;
 import com.example.trackyourmoney.R;
 import com.example.trackyourmoney.ui.ausgaben.AusgabenActivity;
+import com.example.trackyourmoney.ui.kategorie_hinzufuegen.KategorieHinzufuegenActivity;
 import com.trackyourmoney.java.AppDataBase;
 import com.trackyourmoney.java.Ausgabe;
 import com.trackyourmoney.java.AusgabeDAO;
@@ -53,6 +54,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
     TextView textView;
     TextView textView9;
     AppDataBase db;
+    AusgabeDAO ausgabeDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         nameInput = (EditText) findViewById(R.id.nameInput);
         betragInput = (EditText) findViewById(R.id.betragInput);
@@ -78,6 +81,7 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDataBase.class, "App-database").allowMainThreadQueries().build();
+        ausgabeDao = db.ausgabeDao();
 
         wiederholendInput.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -106,7 +110,15 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, alleKategorien);
         kategorieIdInput.setAdapter(adapter);
 
-
+        try{
+            //würde crashen falls keine Kategorie existiert
+            String kategorieEingabe = kategorieIdInput.getSelectedItem().toString();
+        }
+        catch(Exception e){
+            Toast.makeText(this, "Zuerst Kategorie hinzufuegen!", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, KategorieHinzufuegenActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void validation(View view) {
@@ -187,13 +199,8 @@ public class AusgabeHinzufuegenActivity extends AppCompatActivity {
 
         Ausgabe neueAusgabe = new Ausgabe(name, betrag, anmerkungen, date, wiederholend, kategorieId, wiederholungsintervall);
 
-        db.ausgabeDao().insert(neueAusgabe);
+        ausgabeDao.insert(neueAusgabe);
         Toast.makeText(this, "Ausgabe '" + name + "' hinzugefügt!", Toast.LENGTH_LONG).show();
-
-        List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
-        for (Ausgabe list: Ausgaben){
-            Log.d("Ausgaben", "Id:" + list.id + " Name:" + list.name + " Betrag:" + list.betrag + " Anmerkungen:" + list.anmerkungen + " Datum:" + list.date + " Wiederholung?:" + list.wiederholend + " KategorieID:" + list.kategorieId + " Wiederholungsintervall:" + list.wiederholungsintervall);
-        }
     }
 
     public void seiteZurueck(View view){

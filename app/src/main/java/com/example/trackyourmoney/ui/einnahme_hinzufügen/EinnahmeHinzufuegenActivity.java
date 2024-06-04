@@ -2,9 +2,7 @@ package com.example.trackyourmoney.ui.einnahme_hinzufügen;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,26 +16,22 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
-import com.example.trackyourmoney.MainActivity;
 import com.example.trackyourmoney.R;
 import com.example.trackyourmoney.ui.einnahmen.EinnahmenActivity;
+import com.example.trackyourmoney.ui.kategorie_hinzufuegen.KategorieHinzufuegenActivity;
 import com.trackyourmoney.java.AppDataBase;
-import com.trackyourmoney.java.Ausgabe;
-import com.trackyourmoney.java.AusgabeDAO;
-import com.trackyourmoney.java.DatabaseClient;
+
 import com.trackyourmoney.java.Einnahme;
+import com.trackyourmoney.java.EinnahmeDAO;
 import com.trackyourmoney.java.Kategorie;
 
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class EinnahmeHinzufuegenActivity extends AppCompatActivity {
 
@@ -54,6 +48,7 @@ public class EinnahmeHinzufuegenActivity extends AppCompatActivity {
     TextView textView;
     TextView textView9;
     AppDataBase db;
+    EinnahmeDAO einnahmeDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +73,8 @@ public class EinnahmeHinzufuegenActivity extends AppCompatActivity {
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDataBase.class, "App-database").allowMainThreadQueries().build();
+
+        einnahmeDao = db.einnahmeDao();
 
         wiederholendInput.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -107,9 +104,14 @@ public class EinnahmeHinzufuegenActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, alleKategorien);
         kategorieIdInput.setAdapter(adapter);
 
-        List<Ausgabe> Ausgaben = db.ausgabeDao().getAllAusgaben();
-        for (Ausgabe list: Ausgaben){
-            Log.d("Eingaben", "Id:" + list.id + " Name:" + list.name + " Betrag:" + list.betrag + " Anmerkungen:" + list.anmerkungen + " Datum:" + list.date + " Wiederholung?:" + list.wiederholend + " KategorieID:" + list.kategorieId + " Wiederholungsintervall:" + list.wiederholungsintervall);
+        try{
+            //würde crashen falls keine Kategorie existiert
+            String kategorieEingabe = kategorieIdInput.getSelectedItem().toString();
+        }
+        catch(Exception e){
+            Toast.makeText(this, "Zuerst Kategorie hinzufuegen!", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, KategorieHinzufuegenActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -192,13 +194,8 @@ public class EinnahmeHinzufuegenActivity extends AppCompatActivity {
 
         Einnahme neueEinnahme = new Einnahme(name, betrag, anmerkungen, date, wiederholend, kategorieId, wiederholungsintervall);
 
-        db.einnahmeDao().insert(neueEinnahme);
+        einnahmeDao.insert(neueEinnahme);
         Toast.makeText(this, "Einnahme '" + name + "' hinzugefügt!", Toast.LENGTH_LONG).show();
-
-        List<Einnahme> Einnahmen = db.einnahmeDao().getAllEinnahmen();
-        for (Einnahme list: Einnahmen){
-            Log.d("Einnahme", "Id:" + list.id + " Name:" + list.name + " Betrag:" + list.value + " Anmerkungen:" + list.anmerkungen + " Datum:" + list.date + " Wiederholung?:" + list.wiederholend + " KategorieID:" + list.kategorieId + " Wiederholungsintervall:" + list.wiederholungsintervall);
-        }
     }
 
     public void seiteZurueck(View view){

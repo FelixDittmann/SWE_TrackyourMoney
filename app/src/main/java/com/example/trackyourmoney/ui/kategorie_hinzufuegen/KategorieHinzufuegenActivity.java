@@ -66,11 +66,12 @@ public class KategorieHinzufuegenActivity extends AppCompatActivity {
         if(validation == ""){
             Kategorie neueKategorie = new Kategorie(kategorie, budget);
             db.kategorieDao().insert(neueKategorie);
+            Toast.makeText(this, "Kategorie '" + kategorie + "' hinzugefügt!", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, KategorieActivity.class);
+            startActivity(intent);
         }
 
-        Toast.makeText(this, "Kategorie '" + kategorie + "' hinzugefügt!", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this, KategorieActivity.class);
-        startActivity(intent);
+
     }
 
     public void seiteZurueck(View view){
